@@ -1,53 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- index.html -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootstrap Modal Example</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Modal Example Without Bootstrap</title>
     <style>
-        /* Custom styles can be added here */
+        /* Custom styles for modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            position: relative;
+            background-color: #fff;
+            margin: auto;
+            padding: 0;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 800px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation-name: modalopen;
+            animation-duration: 0.4s;
+        }
+
+        @keyframes modalopen {
+            from {
+                top: -300px;
+                opacity: 0;
+            }
+            to {
+                top: 0;
+                opacity: 1;
+            }
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .embed-responsive-16by9 {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .embed-responsive-16by9 iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .yt-showcase-box {
+            cursor: pointer;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            display: inline-block;
+            margin: 10px;
+            border-radius: 4px;
+        }
+
+        .yt-showcase-box:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
     <div class="container mt-5">
-        <h1>Bootstrap Modal Example</h1>
-        <button id="openModalBtn" class="btn btn-primary">Open Modal</button>
+        <h1>Modal Example Without Bootstrap</h1>
+        <div class="yt-showcase-box" data-video-id="YOUR_VIDEO_ID_1">Show Video 1</div>
+        <div class="yt-showcase-box" data-video-id="YOUR_VIDEO_ID_2">Show Video 2</div>
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body p-0">
-                    <div class="embed-responsive embed-responsive-16by9">
-                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" allowfullscreen></iframe>
-                    </div>
-                </div>
+    <div id="exampleModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe id="yt-video" class="embed-responsive-item" src="" allowfullscreen></iframe>
             </div>
         </div>
     </div>
 
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            var openModalBtn = document.getElementById('openModalBtn');
-            var exampleModal = new bootstrap.Modal(document.getElementById('exampleModal'), {
-                keyboard: true
+            var modal = document.getElementById('exampleModal');
+            var closeModalBtn = document.querySelector('.modal .close');
+            var iframe = document.getElementById('yt-video');
+
+            document.querySelectorAll('.yt-showcase-box').forEach(function (element) {
+                element.addEventListener('click', function () {
+                    var videoId = this.getAttribute('data-video-id');
+                    iframe.src = 'https://www.youtube.com/embed/' + videoId;
+                    modal.style.display = 'block';
+                });
             });
 
-            openModalBtn.addEventListener('click', function () {
-                exampleModal.show();
+            closeModalBtn.addEventListener('click', function () {
+                modal.style.display = 'none';
+                iframe.src = '';
+            });
+
+            window.addEventListener('click', function (event) {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                    iframe.src = '';
+                }
             });
         });
     </script>

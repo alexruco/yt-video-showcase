@@ -9,7 +9,7 @@
 <div class="yt-showcase-container" id="yt-showcase-main-container">
     <div class="yt-showcase-column yt-showcase-column-left">
         <a id="featured-video-link" href="https://www.youtube.com/watch?v=<?php echo esc_attr(get_option('yt_video_showcase_featured_video_id')); ?>" target="_blank">
-            <div class="yt-showcase-box-large" id="featured-thumbnail-container" data-video-id="<?php echo esc_attr(get_option('yt_video_showcase_featured_video_id')); ?>">
+            <div class="yt-showcase-box yt-showcase-box-large" id="featured-thumbnail-container" data-video-id="<?php echo esc_attr(get_option('yt_video_showcase_featured_video_id')); ?>">
                 <img id="featured-thumbnail" src="<?php echo esc_attr(get_option('yt_video_showcase_custom_image_featured_video')) ? esc_attr(get_option('yt_video_showcase_custom_image_featured_video')) : ''; ?>" alt="Featured Video">
                 <span class="play-button">
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="play" class="svg-inline--fa fa-play fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M424.41 214.66L72.41 3.66C34.62-17.07 0 1.99 0 48.01V464c0 45.53 34.11 65.61 72.41 44.34l352-208.01c38.2-20.24 38.22-68.45 0-88.67z"></path></svg>
@@ -30,7 +30,7 @@
                 $custom_thumbnail = get_option('yt_video_showcase_custom_image_thumbnail_3');
             }
             ?>
-            <div class="yt-showcase-box-small" data-video-id="<?php echo esc_attr($video_id); ?>">
+            <div class="yt-showcase-box yt-showcase-box-small" data-video-id="<?php echo esc_attr($video_id); ?>">
                 <div class="yt-showcase-inner-box">
                     <a href="https://www.youtube.com/watch?v=<?php echo esc_attr($video_id); ?>" target="_blank">
                         <img id="thumbnail-<?php echo $index + 1; ?>" src="<?php echo esc_attr($custom_thumbnail) ? esc_attr($custom_thumbnail) : ''; ?>" alt="More Video">
@@ -58,6 +58,16 @@ $cta_url = get_option('yt_video_showcase_cta_url');
     <a href="<?php echo($cta_url)?>">
         <button id="videos-cta-button"><?php echo($cta_text)?></button>
     </a>
+</div>
+
+<!-- Modal -->
+<div id="exampleModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe id="yt-video" class="embed-responsive-item" src="" allowfullscreen></iframe>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -113,6 +123,30 @@ document.addEventListener('DOMContentLoaded', function() {
             updateVideoDetails(videoId, index);
         });
     }, 100);
+
+    var modal = document.getElementById('exampleModal');
+    var closeModalBtn = document.querySelector('.modal .close');
+    var iframe = document.getElementById('yt-video');
+
+    document.querySelectorAll('.yt-showcase-box').forEach(function (element) {
+        element.addEventListener('click', function () {
+            var videoId = this.getAttribute('data-video-id');
+            iframe.src = 'https://www.youtube.com/embed/' + videoId;
+            modal.style.display = 'block';
+        });
+    });
+
+    closeModalBtn.addEventListener('click', function () {
+        modal.style.display = 'none';
+        iframe.src = '';
+    });
+
+    window.addEventListener('click', function (event) {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+            iframe.src = '';
+        }
+    });
 });
 </script>
 
@@ -143,18 +177,95 @@ document.addEventListener('DOMContentLoaded', function() {
     background: rgba(0, 0, 0, 0.4); /* Slight background for visibility */
     border-radius: 50%; /* Make the play button circular */
 }
-.yt-showcase-box-large .play-button{
+.yt-showcase-box-large .play-button {
     width: 10%;
     height: 10%;
     left: 50%;
-
 }
-.yt-showcase-box-small .play-button{
+
+.yt-showcase-box-small .play-button {
     width: 7%;
     height: 5%;
     left: 25%;
-
 }
 
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+}
 
+.modal-content {
+    position: relative;
+    background-color: #fff;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 800px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    animation-name: modalopen;
+    animation-duration: 0.4s;
+}
+
+@keyframes modalopen {
+    from {
+        top: -300px;
+        opacity: 0;
+    }
+    to {
+        top: 0;
+        opacity: 1;
+    }
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.embed-responsive-16by9 {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+}
+
+.embed-responsive-16by9 iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.yt-showcase-box {
+    cursor: pointer;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    display: inline-block;
+    margin: 10px;
+    border-radius: 4px;
+}
+
+.yt-showcase-box:hover {
+    background-color: #0056b3;
+}
 </style>
