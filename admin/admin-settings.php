@@ -1,5 +1,6 @@
-// yt_video_showcase_settings.php
-
+<?php
+#admin-settings.php
+?>   
 <?php
 function yt_video_showcase_register_settings() {
     add_option('yt_video_showcase_api_key', '');

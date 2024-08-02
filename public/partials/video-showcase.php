@@ -1,5 +1,7 @@
-<!--video-showcase.php-->
-    <div class="col-md-12" id="yt-showcase-title-container">
+<?php
+#video-showcase.php
+?>    
+<div class="col-md-12" id="yt-showcase-title-container">
 		<h2>Vídeos</h2>
 		<hr>
 	</div>
