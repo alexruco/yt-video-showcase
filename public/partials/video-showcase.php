@@ -10,7 +10,7 @@
     <div class="yt-showcase-column yt-showcase-column-left">
         <a id="featured-video-link" href="https://www.youtube.com/watch?v=<?php echo esc_attr(get_option('yt_video_showcase_featured_video_id')); ?>" target="_blank">
             <div class="yt-showcase-box-large" id="featured-thumbnail-container" data-video-id="<?php echo esc_attr(get_option('yt_video_showcase_featured_video_id')); ?>">
-                <img id="featured-thumbnail" src="" alt="Featured Video">
+                <img id="featured-thumbnail" src="<?php echo esc_attr(get_option('yt_video_showcase_custom_image_featured_video')) ? esc_attr(get_option('yt_video_showcase_custom_image_featured_video')) : ''; ?>" alt="Featured Video">
             </div>
         </a>
     </div>
@@ -18,11 +18,19 @@
         <?php
         $video_ids = explode(',', get_option('yt_video_showcase_video_ids'));
         foreach ($video_ids as $index => $video_id) {
+            $custom_thumbnail = '';
+            if ($index == 0) {
+                $custom_thumbnail = get_option('yt_video_showcase_custom_image_thumbnail_1');
+            } elseif ($index == 1) {
+                $custom_thumbnail = get_option('yt_video_showcase_custom_image_thumbnail_2');
+            } elseif ($index == 2) {
+                $custom_thumbnail = get_option('yt_video_showcase_custom_image_thumbnail_3');
+            }
             ?>
             <div class="yt-showcase-box-small" data-video-id="<?php echo esc_attr($video_id); ?>">
                 <div class="yt-showcase-inner-box">
                     <a href="https://www.youtube.com/watch?v=<?php echo esc_attr($video_id); ?>" target="_blank">
-                        <img id="thumbnail-<?php echo $index + 1; ?>" src="" alt="More Video">
+                        <img id="thumbnail-<?php echo $index + 1; ?>" src="<?php echo esc_attr($custom_thumbnail) ? esc_attr($custom_thumbnail) : ''; ?>" alt="More Video">
                     </a>
                 </div>
                 <div class="yt-showcase-inner-box">
@@ -54,9 +62,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const customThumbnails = {
         featured: "<?php echo esc_js(get_option('yt_video_showcase_custom_image_featured_video')); ?>",
-        1: "<?php echo esc_js(get_option('yt_video_showcase_custom_image_thumbnail_1')); ?>",
-        2: "<?php echo esc_js(get_option('yt_video_showcase_custom_image_thumbnail_2')); ?>",
-        3: "<?php echo esc_js(get_option('yt_video_showcase_custom_image_thumbnail_3')); ?>"
+        0: "<?php echo esc_js(get_option('yt_video_showcase_custom_image_thumbnail_1')); ?>",
+        1: "<?php echo esc_js(get_option('yt_video_showcase_custom_image_thumbnail_2')); ?>",
+        2: "<?php echo esc_js(get_option('yt_video_showcase_custom_image_thumbnail_3')); ?>"
     };
 
     async function fetchVideoDetails(videoId) {
@@ -71,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateVideoDetails(videoId, index) {
         fetchVideoDetails(videoId).then(snippet => {
-            const customThumbnail = customThumbnails[index + 1] ? customThumbnails[index + 1] : snippet.thumbnails.high.url;
+            const customThumbnail = customThumbnails[index] ? customThumbnails[index] : snippet.thumbnails.high.url;
             document.getElementById(`thumbnail-${index + 1}`).src = customThumbnail;
             document.getElementById(`date-${index + 1}`).textContent = new Date(snippet.publishedAt).toLocaleDateString();
             document.getElementById(`title-${index + 1}`).textContent = snippet.title;
@@ -92,9 +100,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    updateFeaturedVideo(featuredVideoId);
-    videoIds.forEach((videoId, index) => {
-        updateVideoDetails(videoId, index);
-    });
+    // Add a slight delay to ensure the DOM is fully loaded before making changes
+    setTimeout(() => {
+        updateFeaturedVideo(featuredVideoId);
+        videoIds.forEach((videoId, index) => {
+            updateVideoDetails(videoId, index);
+        });
+    }, 100);
 });
 </script>
