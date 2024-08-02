@@ -11,6 +11,9 @@
         <a id="featured-video-link" href="https://www.youtube.com/watch?v=<?php echo esc_attr(get_option('yt_video_showcase_featured_video_id')); ?>" target="_blank">
             <div class="yt-showcase-box-large" id="featured-thumbnail-container" data-video-id="<?php echo esc_attr(get_option('yt_video_showcase_featured_video_id')); ?>">
                 <img id="featured-thumbnail" src="<?php echo esc_attr(get_option('yt_video_showcase_custom_image_featured_video')) ? esc_attr(get_option('yt_video_showcase_custom_image_featured_video')) : ''; ?>" alt="Featured Video">
+                <span class="play-button">
+                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="play" class="svg-inline--fa fa-play fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M424.41 214.66L72.41 3.66C34.62-17.07 0 1.99 0 48.01V464c0 45.53 34.11 65.61 72.41 44.34l352-208.01c38.2-20.24 38.22-68.45 0-88.67z"></path></svg>
+                </span>
             </div>
         </a>
     </div>
@@ -31,6 +34,9 @@
                 <div class="yt-showcase-inner-box">
                     <a href="https://www.youtube.com/watch?v=<?php echo esc_attr($video_id); ?>" target="_blank">
                         <img id="thumbnail-<?php echo $index + 1; ?>" src="<?php echo esc_attr($custom_thumbnail) ? esc_attr($custom_thumbnail) : ''; ?>" alt="More Video">
+                        <span class="play-button">
+                            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="play" class="svg-inline--fa fa-play fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M424.41 214.66L72.41 3.66C34.62-17.07 0 1.99 0 48.01V464c0 45.53 34.11 65.61 72.41 44.34l352-208.01c38.2-20.24 38.22-68.45 0-88.67z"></path></svg>
+                        </span>
                     </a>
                 </div>
                 <div class="yt-showcase-inner-box">
@@ -109,3 +115,35 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 100);
 });
 </script>
+
+<style>
+.play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 2em;
+    opacity: 0.8;
+    pointer-events: none; /* Ensure the play button doesn't interfere with clicking the thumbnail */
+}
+.yt-showcase-box-large, .yt-showcase-box-small {
+    position: relative; /* Ensure the play button is positioned relative to the thumbnail */
+}
+
+.yt-showcase-box-large img,
+.yt-showcase-box-small img {
+    display: block;
+}
+
+.yt-showcase-box-large .play-button,
+.yt-showcase-box-small .play-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* Slight background for visibility */
+    border-radius: 50%; /* Make the play button circular */
+}
+</style>

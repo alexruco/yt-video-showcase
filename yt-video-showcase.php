@@ -2,7 +2,7 @@
 /*
 Plugin Name: YouTube Video Showcase
 Description: A plugin to showcase YouTube videos.
-Version: 1.0
+Version: 1.1
 Author: Alex Ruco
 */
 
