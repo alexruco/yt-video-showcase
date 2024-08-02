@@ -1,0 +1,118 @@
+/*styles.css*/
+
+
+.yt-showcase-container {
+    display: flex;
+    gap: 10px;
+	justify-content:center;
+	margin:20px 0px 0px 20px;
+}
+
+.yt-showcase-container img{
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.yt-showcase-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.yt-showcase-column-left .yt-showcase-box-large {
+    width: 55vw;
+    height: 31vw;
+}
+
+.yt-showcase-column-right {
+    justify-content: space-between;
+}
+
+.yt-showcase-column-right .yt-showcase-box-small {
+    width: 35vw;
+    height: 9.6vw;
+    /*     background-color: #2ecc71;
+ */    display: flex;
+    gap: 10px;
+}
+
+.yt-showcase-inner-box {
+    width: 50%;
+    height: 100%;
+/*     background-color: #e74c3c;
+ */}
+
+
+.video-details-date{
+    font-size:10px;
+	color:var(--darker-blue);
+	text-decoration:underline;
+}
+.video-details-title{
+    font-weight:bold;
+    color: gray;
+    font-size:10px;
+    text-transform:uppercase;
+    overflow: hidden;
+}
+.video-details-description{
+    font-size:10px; 
+    overflow: hidden;
+}
+#yt-showcase-main-container{
+    visibility:hidden;
+	display:flex;
+}
+
+@media only screen and (max-width: 1021px) {
+.yt-showcase-column-right{
+    display:none;
+}
+.yt-showcase-column-left .yt-showcase-box-large {
+    width: 95vw;
+    height: 53vw;
+}
+}
+@media only screen and (max-width: 1100px) {
+	
+.yt-showcase-container {
+    display: flex;
+    gap: 10px;
+	justify-content:center;
+	margin:20px 5px 20px 5px;
+}
+
+.video-details-description{
+    display:none;
+}
+}
+
+#yt-showcase-title-container {
+	padding-left:0px;
+}
+
+#yt-showcase-title-container h2 {
+    font-weight:600;
+}
+
+#yt-showcase-title-container hr {
+    border-top:1px solid gray;
+}
+
+.mktv-cta-container{
+    display:flex;
+	justify-content:center;
+}
+#videos-cta-button{
+	border-radius:25px!important;
+	background-color:var(--darker-blue)!important;
+	padding:5px 25px!important;
+	margin-top:40px!important;
+}
+
+
+.videos-home{
+	margin-top:30px;
+}
+
