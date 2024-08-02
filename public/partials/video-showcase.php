@@ -223,7 +223,7 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 .close {
-    color: #000;
+    color: #fff;
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -232,7 +232,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 .close:hover,
 .close:focus {
-    color: #fff;
+    color: #555;
     text-decoration: none;
     cursor: pointer;
 }
