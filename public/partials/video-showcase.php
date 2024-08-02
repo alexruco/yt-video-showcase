@@ -120,7 +120,6 @@ document.addEventListener('DOMContentLoaded', function() {
 .play-button {
     position: absolute;
     top: 50%;
-    left: 50%;
     transform: translate(-50%, -50%);
     color: white;
     font-size: 2em;
@@ -141,9 +140,21 @@ document.addEventListener('DOMContentLoaded', function() {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    height: 100%;
     background: rgba(0, 0, 0, 0.4); /* Slight background for visibility */
     border-radius: 50%; /* Make the play button circular */
 }
+.yt-showcase-box-large .play-button{
+    width: 10%;
+    height: 10%;
+    left: 50%;
+
+}
+.yt-showcase-box-small .play-button{
+    width: 7%;
+    height: 5%;
+    left: 25%;
+
+}
+
+
 </style>
