@@ -46,7 +46,7 @@
 
 .video-details-date{
     font-size:10px;
-	color:var(--darker-blue);
+	color:#333;
 	text-decoration:underline;
 }
 .video-details-title{
